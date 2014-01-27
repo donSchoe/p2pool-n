@@ -1,0 +1,22 @@
+{
+  "name": "p2pool-scanner",
+  "author": {
+    "name": "donSchoe",
+    "email": "donschoe@qhor.net"
+  },
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "*",
+    "json" : "*",
+    "underscore" : "*"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/donSchoe/p2pool-scanner.git"
+  },
+  "readmeFilename": "README.md"
+
+}
