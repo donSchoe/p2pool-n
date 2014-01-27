@@ -22,7 +22,7 @@ static unsigned char getNfactor(char* blockheader) {
 
     s &= 3;
 
-    n = (l * 150 + s * 25 - 2320) / 100;
+    n = (l * 158 + s * 28 - 2670) / 100;
 
     if (n < 0) n = 0;
 
