@@ -137,26 +137,7 @@ nets = dict(
         MAX_TARGET=2**256//2**20 - 1,
         PERSIST=False,
         WORKER_PORT=9171,
-        BOOTSTRAP_ADDRS='178.63.15.130 P2POOL.ETYD.ORG'.split(' '),
-        ANNOUNCE_CHANNEL='#p2pool-vtc',
-        VERSION_CHECK=lambda v: True,
-    ),
-
-    vertcoin_testnet=math.Object(
-        PARENT=networks.nets['vertcoin_testnet'],
-        SHARE_PERIOD=15, # seconds
-        CHAIN_LENGTH=24*60*60//10, # shares
-        REAL_CHAIN_LENGTH=24*60*60//10, # shares
-        TARGET_LOOKBEHIND=200, # shares
-        SPREAD=12, # blocks
-        IDENTIFIER='fa2cac5579f0abe6'.decode('hex'),
-        PREFIX='b11bcc3eba4513ae'.decode('hex'),
-        P2P_PORT=19346,
-        MIN_TARGET=0,
-        MAX_TARGET=2**256//2**20 - 1,
-        PERSIST=False,
-        WORKER_PORT=19171,
-        BOOTSTRAP_ADDRS='p2pool.etyd.org'.split(' '),
+        BOOTSTRAP_ADDRS='178.63.15.130 p2pool.etyd.org vtc.royalminingco.com'.split(' '),
         ANNOUNCE_CHANNEL='#p2pool-vtc',
         VERSION_CHECK=lambda v: True,
     ),
