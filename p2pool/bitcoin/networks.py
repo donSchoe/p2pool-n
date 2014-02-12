@@ -200,7 +200,6 @@ nets = dict(
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
     ),
-
 )
 for net_name, net in nets.iteritems():
     net.NAME = net_name
