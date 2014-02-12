@@ -58,7 +58,7 @@ nets = dict(
         DUMB_SCRYPT_DIFF=1,
         DUST_THRESHOLD=1e8,
     ),
-    
+
     namecoin=math.Object(
         P2P_PREFIX='f9beb4fe'.decode('hex'),
         P2P_PORT=8334,
@@ -101,7 +101,7 @@ nets = dict(
         DUMB_SCRYPT_DIFF=1,
         DUST_THRESHOLD=1e8,
     ),
-    
+
     litecoin=math.Object(
         P2P_PREFIX='fbc0b6db'.decode('hex'),
         P2P_PORT=9333,
@@ -206,6 +206,29 @@ nets = dict(
         ADDRESS_EXPLORER_URL_PREFIX='http://explorer.vertcoin.org/address/',
         TX_EXPLORER_URL_PREFIX='http://explorer.vertcoin.org/tx/',
         SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
+        DUMB_SCRYPT_DIFF=2**16,
+        DUST_THRESHOLD=0.03e8,
+    ),
+
+    cachecoin=math.Object(
+        P2P_PREFIX='5c394226'.decode('hex'),
+        P2P_PORT=2225,
+        ADDRESS_VERSION=28,
+        RPC_PORT=2224,
+        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
+            'cachecoinaddress' in (yield bitcoind.rpc_help()) and
+            not (yield bitcoind.rpc_getinfo())['testnet']
+        )),
+        SUBSIDY_FUNC=lambda target: get_subsidy(6, 100, target),
+        BLOCKHASH_FUNC=lambda header: pack.IntType(256).unpack(__import__('yac_scrypt').getPoWHash(header, data.block_header_type.unpack(header)['timestamp'])),
+        POW_FUNC=lambda header: pack.IntType(256).unpack(__import__('yac_scrypt').getPoWHash(header, data.block_header_type.unpack(header)['timestamp'])),
+        BLOCK_PERIOD=900, # s
+        SYMBOL='CACH',
+        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'cachecoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/cachecoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.cachecoin'), 'cachecoin.conf'),
+        BLOCK_EXPLORER_URL_PREFIX='http://explorer.cachecoin.org/block/',
+        ADDRESS_EXPLORER_URL_PREFIX='http://explorer.cachecoin.org/address/',
+        TX_EXPLORER_URL_PREFIX='http://explorer.cachecoin.org/tx/',
+        SANE_TARGET_RANGE=(2**256//2**20//1000 - 1, 2**256//2**20 - 1),
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
     ),
