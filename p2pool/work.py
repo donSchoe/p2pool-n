@@ -179,7 +179,11 @@ class WorkerBridge(worker_interface.WorkerBridge):
     def _estimate_local_hash_rate(self):
         if len(self.recent_shares_ts_work) == 50:
             hash_rate = sum(work for ts, work in self.recent_shares_ts_work[1:])//(self.recent_shares_ts_work[-1][0] - self.recent_shares_ts_work[0][0])
+<<<<<<< HEAD
             if hash_rate:
+=======
+            if hash_rate > 0:
+>>>>>>> forrest/master
                 return hash_rate
         return None
     
