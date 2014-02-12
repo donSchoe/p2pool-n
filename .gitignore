@@ -6,3 +6,4 @@ vertcoin_scrypt/build/*
 p2pool-scanner/index.html
 p2pool-scanner/node_modules/*
 p2pool-scanner/p2pool-vertcoin-public.json
+*.orig
