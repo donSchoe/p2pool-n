@@ -52,11 +52,11 @@ Notes for Vertcoin:
 Requirements:
 -------------------------
 In order to run P2Pool with the Vertcoin network, you would need to build and install the
-ltc_scrypt module that includes the scrypt proof of work code that Vertcoin uses for hashes.
+vtc_scrypt module that includes the scrypt proof of work code that Vertcoin uses for hashes.
 
 Linux:
 
-    cd vertcoin_scrypt
+    cd py_modules/vertcoin_scrypt
     sudo python setup.py install
 
 Windows (mingw):
@@ -65,7 +65,7 @@ Windows (mingw):
 
 In bash type this:
 
-    cd vertcoin_scrypt
+    cd py_modules\vertcoin_scrypt
     C:\Python27\python.exe setup.py build --compile=mingw32 install
 
 Windows (microsoft visual c++)
@@ -75,7 +75,7 @@ In bash type this:
 
     SET VS90COMNTOOLS=%VS110COMNTOOLS%	           # For visual c++ 2012
     SET VS90COMNTOOLS=%VS100COMNTOOLS%             # For visual c++ 2010
-    cd vertcoin_scrypt
+    cd py_modules\vertcoin_scrypt
     C:\Python27\python.exe setup.py build --compile=mingw32 install
 
 If you run into an error with unrecognized command line option '-mno-cygwin', see this:
@@ -86,10 +86,16 @@ Running P2Pool:
 Run P2Pool with the "--net vertcoin" option.
 Run your miner program, connecting to 127.0.0.1 on port 9171.
 
+Notes for Cachecoin:
+=========================
+This is currently under heavy development and still experimental. For the
+current latest stable implementation, please use https://github.com/Sykh/p2pool-cache
+
 Sponsors:
 -------------------------
 
 Thanks to:
 * The Bitcoin Foundation for its generous support of P2Pool
 * The Litecoin Project for its generous donations to P2Pool
+* The Vertcoin Community for its great contribution to P2Pool
 
