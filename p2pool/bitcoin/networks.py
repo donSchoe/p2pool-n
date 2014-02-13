@@ -211,7 +211,7 @@ nets = dict(
     ),
 
     cachecoin=math.Object(
-        P2P_PREFIX='5c394226'.decode('hex'),
+        P2P_PREFIX='d9e6e7e5'.decode('hex'),
         P2P_PORT=2225,
         ADDRESS_VERSION=28,
         RPC_PORT=2224,
