@@ -5,6 +5,26 @@ from twisted.internet import defer
 
 from . import data
 from p2pool.util import math, pack, jsonrpc
+from operator import *
+
+def get_subsidy(nCap, nMaxSubsidy, bnTarget):
+    bnLowerBound = 0.01
+    bnUpperBound = bnSubsidyLimit = nMaxSubsidy
+    bnTargetLimit = 0x00000fffff000000000000000000000000000000000000000000000000000000
+
+    while bnLowerBound + 0.01 <= bnUpperBound:
+        bnMidValue = (bnLowerBound + bnUpperBound) / 2
+        if pow(bnMidValue, nCap) * bnTargetLimit > pow(bnSubsidyLimit, nCap) * bnTarget:
+            bnUpperBound = bnMidValue
+        else:
+            bnLowerBound = bnMidValue
+
+    nSubsidy = round(bnMidValue, 2)
+
+    if nSubsidy > bnMidValue:
+        nSubsidy = nSubsidy - 0.01
+
+    return int(nSubsidy * 1000000)
 
 @defer.inlineCallbacks
 def check_genesis_block(bitcoind, genesis_block_hash):
