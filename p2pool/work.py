@@ -245,9 +245,10 @@ class WorkerBridge(worker_interface.WorkerBridge):
                 else:
                     share_type = previous_share_type
         
+        local_addr_rates = self.get_local_addr_rates()
+
         if desired_share_target is None:
             desired_share_target = 2**256-1
-            local_addr_rates = self.get_local_addr_rates()
             local_hash_rate = local_addr_rates.get(pubkey_hash, 0)
             if local_hash_rate > 0.0:
                 desired_share_target = min(desired_share_target,
@@ -298,9 +299,9 @@ class WorkerBridge(worker_interface.WorkerBridge):
         mm_later = [(dict(aux_work, target=aux_work['target'] if aux_work['target'] != 'p2pool' else share_info['bits'].target), index, hashes) for aux_work, index, hashes in mm_later]
         
         if desired_pseudoshare_target is None:
-            target = 2**256-1
-            local_hash_rate = self._estimate_local_hash_rate()
-            if local_hash_rate is not None:
+            target = bitcoin_data.difficulty_to_target(float(1.0 / self.node.net.PARENT.DUMB_SCRYPT_DIFF))
+            local_hash_rate = local_addr_rates.get(pubkey_hash, 0)
+            if local_hash_rate > 0.0:
                 target = min(target,
                     bitcoin_data.average_attempts_to_target(local_hash_rate * 1)) # limit to 1 share response every second by modulating pseudoshare difficulty
         else:
@@ -318,7 +319,8 @@ class WorkerBridge(worker_interface.WorkerBridge):
             bitcoin_data.pubkey_hash_to_address(pubkey_hash, self.node.net.PARENT),
             bitcoin_data.target_to_difficulty(target),
             bitcoin_data.target_to_difficulty(share_info['bits'].target),
-            self.get_local_addr_rates().get(pubkey_hash, 0),
+            #self.get_local_addr_rates().get(pubkey_hash, 0),
+            local_addr_rates.get(pubkey_hash, 0),
             self.current_work.value['subsidy']*1e-8, self.node.net.PARENT.SYMBOL,
             len(self.current_work.value['transactions']),
         )
