@@ -160,6 +160,26 @@ nets = dict(
         ANNOUNCE_CHANNEL='#cachecoin-bots',
         VERSION_CHECK=lambda v: True,
     ),
+
+    gpucoin=math.Object(
+        PARENT=networks.nets['gpucoin'],
+        SHARE_PERIOD=10, # seconds
+        CHAIN_LENGTH=24*60*60//10, # shares
+        REAL_CHAIN_LENGTH=24*60*60//10, # shares
+        TARGET_LOOKBEHIND=200, # shares
+        SPREAD=50, # blocks
+        IDENTIFIER='a06a81c824bab259'.decode('hex'),
+        PREFIX='7c3614a6abe3f884'.decode('hex'),
+        P2P_PORT=9451,
+        MIN_TARGET=4,
+        MAX_TARGET=2**256//2**20 - 1,
+        PERSIST=True,
+        WORKER_PORT=9404,
+        BOOTSTRAP_ADDRS='gpu.qemulab.com 96.51.143.9 aforis.mooo.com 96.126.121.117 gpu.crabdance.com'.split(' '),
+        ANNOUNCE_CHANNEL='#p2pool-gpuc',
+        VERSION_CHECK=lambda v: True,
+    ),
+                                                                                                                                            
 )
 for net_name, net in nets.iteritems():
     net.NAME = net_name
