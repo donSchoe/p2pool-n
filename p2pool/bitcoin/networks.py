@@ -252,6 +252,31 @@ nets = dict(
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
     ),
+    
+    gpucoin=math.Object(
+        P2P_PREFIX='fbc0b6db'.decode('hex'),
+        P2P_PORT=8623,
+        ADDRESS_VERSION=38,
+        RPC_PORT=9026,
+        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
+            'gpucoinaddress' in (yield bitcoind.rpc_help()) and
+            not (yield bitcoind.rpc_getinfo())['testnet']
+        )),
+        SUBSIDY_FUNC=lambda height: 20000*100000000 >> (height + 1)//250000,
+        POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('vtc_scrypt').getPoWHash(data)),
+        BLOCK_PERIOD=60, # s
+        SYMBOL='GPUC',
+        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'],
+            'Gpucoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Gpucoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.gpucoin'), 'gpucoin.conf'),
+        BLOCK_EXPLORER_URL_PREFIX='http://explorer2.sancrypto.info/block/',
+        ADDRESS_EXPLORER_URL_PREFIX='http://explorer2.sancrypto.info/address/',
+        TX_EXPLORER_URL_PREFIX='http://explorer2.sancrypto.info/tx/',
+        SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
+        DUMB_SCRYPT_DIFF=2**16,
+        DUST_THRESHOLD=0.03e8,
+    ),
+                                                                                                                                                                            
+    
 )
 for net_name, net in nets.iteritems():
     net.NAME = net_name
