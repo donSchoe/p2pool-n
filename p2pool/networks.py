@@ -179,6 +179,25 @@ nets = dict(
         ANNOUNCE_CHANNEL='#p2pool-gpuc',
         VERSION_CHECK=lambda v: True,
     ),
+
+    execoin=math.Object(
+        PARENT=networks.nets['execoin'],
+        SHARE_PERIOD=10, # seconds
+        CHAIN_LENGTH=24*60*60//10, # shares
+        REAL_CHAIN_LENGTH=24*60*60//10, # shares
+        TARGET_LOOKBEHIND=200, # shares
+        SPREAD=50, # blocks
+        IDENTIFIER='657865636f696e65'.decode('hex'),
+        PREFIX='65657865636f696e'.decode('hex'),
+        P2P_PORT=9986,
+        MIN_TARGET=4,
+        MAX_TARGET=2**256//2**20 - 1,
+        PERSIST=True,
+        WORKER_PORT=9173,
+        BOOTSTRAP_ADDRS='exe.p2pool.info freebtc.eu'.split(' '),
+        ANNOUNCE_CHANNEL='#p2pool-exe',
+        VERSION_CHECK=lambda v: True,
+    ),
                                                                                                                                             
 )
 for net_name, net in nets.iteritems():
