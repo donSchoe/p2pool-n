@@ -1,7 +1,13 @@
+P2Pool Server Node software for Scrypt-N coins. Currently supported:
+* Vertcoin [VTC]
+* GPUCoin [GPUC]
+* Execoin [EXE]
+
+
 Requirements:
 -------------------------
 Generic:
-* Vertcoin >=0.8.5
+* Coindaemon >=0.8.5
 * Python >=2.6
 * Twisted >=10.0.0
 * python-argparse (for Python =2.6)
@@ -18,6 +24,7 @@ Windows:
 * Install python win32 api wmi wrapper: https://pypi.python.org/pypi/WMI/#downloads
 * Unzip the files into C:\Python27\Lib\site-packages
 
+
 Running P2Pool:
 -------------------------
 To use P2Pool, you must be running your own local bitcoind. For standard
@@ -25,7 +32,7 @@ configurations, using P2Pool should be as simple as:
 
     python run_p2pool.py
 
-Then run your miner program, connecting to 127.0.0.1 on port 9332 with any
+Then run your miner program, connecting to 127.0.0.1 on P2Pool-port with any
 username and password.
 
 If you are behind a NAT, you should enable TCP port forwarding on your
@@ -35,24 +42,25 @@ Run for additional options.
 
     python run_p2pool.py --help
 
-Donations towards further development:
--------------------------
-    1HNeqi3pJRNvXybNX4FKzZgYJsdTSqJTbk
 
-Official wiki :
+Official P2Pool wiki:
 -------------------------
 https://en.bitcoin.it/wiki/P2Pool
 
-Alternate web front end :
+
+Alternate web front ends:
 -------------------------
 * https://github.com/hardcpp/P2PoolExtendedFrontEnd
+* https://github.com/johndoe75/p2pool-node-status
 
-Notes for Vertcoin:
+
+Notes for Scrypt-N-Coins:
 =========================
+
 Requirements:
 -------------------------
-In order to run P2Pool with the Vertcoin network, you would need to build and install the
-vtc_scrypt module that includes the scrypt proof of work code that Vertcoin uses for hashes.
+In order to run P2Pool with the Scrypt-N-Coins, you would need to build and install the
+vtc_scrypt module that includes the scrypt proof of work code that Scrypt-N-Coins uses for hashes.
 
 Linux:
 
@@ -79,23 +87,30 @@ In bash type this:
     C:\Python27\python.exe setup.py build --compile=mingw32 install
 
 If you run into an error with unrecognized command line option '-mno-cygwin', see this:
-http://stackoverflow.com/questions/6034390/compiling-with-cython-and-mingw-produces-gcc-error-unrecognized-command-line-o
+http://stackoverflow.com/q/6034390/1260906
+
 
 Running P2Pool:
 -------------------------
-Run P2Pool with the "--net vertcoin" option.
-Run your miner program, connecting to 127.0.0.1 on port 9171.
+Vertcoin: 
+* Run P2Pool with the "--net vertcoin" option.
+* Run your miner program, connecting to 127.0.0.1 on port 9171.
 
-Notes for Cachecoin:
-=========================
-This is currently under heavy development and still experimental. For the
-current latest stable implementation, please use https://github.com/Sykh/p2pool-cache
+GPUCcoin: 
+* Run P2Pool with the "--net gpucoin" option.
+* Run your miner program, connecting to 127.0.0.1 on port 9404.
+
+Execoin: 
+* Run P2Pool with the "--net execoin" option.
+* Run your miner program, connecting to 127.0.0.1 on port 9173.
+
 
 Sponsors:
 -------------------------
 
 Thanks to:
-* The Bitcoin Foundation for its generous support of P2Pool
-* The Litecoin Project for its generous donations to P2Pool
-* The Vertcoin Community for its great contribution to P2Pool
+* The Bitcoin Foundation for its generous support of P2Pool.
+* The Litecoin Project for its generous donations to P2Pool.
+* The Vertcoin Community for its great contribution to P2Pool.
+* Everyone contributing to the P2Pool-N repository adding new coins.
 
