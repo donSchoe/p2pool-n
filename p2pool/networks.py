@@ -27,24 +27,6 @@ nets = dict(
         VERSION_CHECK=lambda v: 50700 <= v < 60000 or 60010 <= v < 60100 or 60400 <= v,
         VERSION_WARNING=lambda v: 'Upgrade Bitcoin to >=0.8.5!' if v < 80500 else None,
     ),
-    bitcoin_testnet=math.Object(
-        PARENT=networks.nets['bitcoin_testnet'],
-        SHARE_PERIOD=30, # seconds
-        CHAIN_LENGTH=60*60//10, # shares
-        REAL_CHAIN_LENGTH=60*60//10, # shares
-        TARGET_LOOKBEHIND=200, # shares
-        SPREAD=3, # blocks
-        IDENTIFIER='5fc2be2d4f0d6bfb'.decode('hex'),
-        PREFIX='3f6057a15036f441'.decode('hex'),
-        P2P_PORT=19333,
-        MIN_TARGET=4,
-        MAX_TARGET=2**256//2**32 - 1,
-        PERSIST=False,
-        WORKER_PORT=19332,
-        BOOTSTRAP_ADDRS='forre.st vps.forre.st liteco.in'.split(' '),
-        ANNOUNCE_CHANNEL='#p2pool-alt',
-        VERSION_CHECK=lambda v: 50700 <= v < 60000 or 60010 <= v < 60100 or 60400 <= v,
-    ),
 
     litecoin=math.Object(
         PARENT=networks.nets['litecoin'],
@@ -65,63 +47,6 @@ nets = dict(
         VERSION_CHECK=lambda v: True,
         VERSION_WARNING=lambda v: 'Upgrade Litecoin to >=0.8.5.1!' if v < 80501 else None,
     ),
-    litecoin_testnet=math.Object(
-        PARENT=networks.nets['litecoin_testnet'],
-        SHARE_PERIOD=4, # seconds
-        CHAIN_LENGTH=20*60//3, # shares
-        REAL_CHAIN_LENGTH=20*60//3, # shares
-        TARGET_LOOKBEHIND=200, # shares
-        SPREAD=3, # blocks
-        IDENTIFIER='cca5e24ec6408b1e'.decode('hex'),
-        PREFIX='ad9614f6466a39cf'.decode('hex'),
-        P2P_PORT=19338,
-        MIN_TARGET=4,
-        MAX_TARGET=2**256//50 - 1,
-        PERSIST=False,
-        WORKER_PORT=19327,
-        BOOTSTRAP_ADDRS='forre.st vps.forre.st'.split(' '),
-        ANNOUNCE_CHANNEL='#p2pool-alt',
-        VERSION_CHECK=lambda v: True,
-    ),
-
-    terracoin=math.Object(
-        PARENT=networks.nets['terracoin'],
-        SHARE_PERIOD=30, # seconds
-        CHAIN_LENGTH=24*60*60//30, # shares
-        REAL_CHAIN_LENGTH=24*60*60//30, # shares
-        TARGET_LOOKBEHIND=200, # shares
-        SPREAD=15, # blocks
-        IDENTIFIER='a41b2356a1b7d46e'.decode('hex'),
-        PREFIX='5623b62178d2b9b3'.decode('hex'),
-        P2P_PORT=9323,
-        MIN_TARGET=4,
-        MAX_TARGET=2**256//2**32 - 1,
-        PERSIST=True,
-        WORKER_PORT=9322,
-        BOOTSTRAP_ADDRS='seed1.p2pool.terracoin.org seed2.p2pool.terracoin.org forre.st vps.forre.st 93.97.192.93 66.90.73.83 67.83.108.0 219.84.64.174 24.167.17.248 109.74.195.142 83.211.86.49 94.23.34.145 168.7.116.243 94.174.40.189:9344 89.79.79.195 portals94.ns01.us'.split(' '),
-        ANNOUNCE_CHANNEL='#p2pool-alt',
-        VERSION_CHECK=lambda v: 80002 <= v,
-        VERSION_WARNING=lambda v: 'Upgrade Terracoin to >= 0.8.0.2!' if v < 80002 else None,
-    ),
-    terracoin_testnet=math.Object(
-        PARENT=networks.nets['terracoin_testnet'],
-        SHARE_PERIOD=30, # seconds
-        CHAIN_LENGTH=60*60//30, # shares
-        REAL_CHAIN_LENGTH=60*60//30, # shares
-        TARGET_LOOKBEHIND=200, # shares
-        SPREAD=15, # blocks
-        IDENTIFIER='b41b2356a5b7d35d'.decode('hex'),
-        PREFIX='1623b92172d2b8a2'.decode('hex'),
-        P2P_PORT=19323,
-        MIN_TARGET=4,
-        MAX_TARGET=2**256//2**32 - 1,
-        PERSIST=False,
-        WORKER_PORT=19322,
-        BOOTSTRAP_ADDRS='seed1.p2pool.terracoin.org seed2.p2pool.terracoin.org forre.st vps.forre.st'.split(' '),
-        ANNOUNCE_CHANNEL='#p2pool-alt',
-        VERSION_CHECK=lambda v: True,
-        VERSION_WARNING=lambda v: 'Upgrade Terracoin to >= 0.8.0.1!' if v < 80001 else None,
-    ),
 
     vertcoin=math.Object(
         PARENT=networks.nets['vertcoin'],
@@ -139,25 +64,6 @@ nets = dict(
         WORKER_PORT=9171,
         BOOTSTRAP_ADDRS='q30.qhor.net seed.p2pool.etyd.org vtc.royalminingco.com'.split(' '),
         ANNOUNCE_CHANNEL='#p2pool-vtc',
-        VERSION_CHECK=lambda v: True,
-    ),
-
-    cachecoin=math.Object(
-        PARENT=networks.nets['cachecoin'],
-        SHARE_PERIOD=120, # seconds
-        CHAIN_LENGTH=12*60*60//120, # shares
-        REAL_CHAIN_LENGTH=12*60*60//120, # shares
-        TARGET_LOOKBEHIND=30, # shares
-        SPREAD=36, # blocks
-        IDENTIFIER='65375c4f7a4d584f'.decode('hex'),
-        PREFIX='642a2c6524364268'.decode('hex'),
-        P2P_PORT=2226,
-        MIN_TARGET=4,
-        MAX_TARGET=2**256//2**20 - 1,
-        PERSIST=False,
-        WORKER_PORT=8336,
-        BOOTSTRAP_ADDRS='207.30.158.106 p2cache.syware.de q39.qhor.net q30.qhor.net'.split(' '),
-        ANNOUNCE_CHANNEL='#cachecoin-bots',
         VERSION_CHECK=lambda v: True,
     ),
 
