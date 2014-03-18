@@ -7,6 +7,20 @@ from . import data
 from p2pool.util import math, pack, jsonrpc
 from operator import *
 
+def get_tenfivesubsidy(bnHeight):
+    if bnHeight == 1:
+        nSubsidy = 105000
+    elif bnHeight <= 1050:
+        nSubsidy = 1.57079632
+    elif bnHeight <= 3150:
+        nSubsidy = 3.14159265
+    elif bnHeight <= 4000:
+        nSubsidy = 9.8596
+    else:
+        nSubsidy = 3.14159265
+
+    return int(nSubsidy * 1000000)
+
 def get_subsidy(nCap, nMaxSubsidy, bnTarget):
     bnLowerBound = 0.01
     bnUpperBound = bnSubsidyLimit = nMaxSubsidy
@@ -75,6 +89,28 @@ nets = dict(
         BLOCK_EXPLORER_URL_PREFIX='http://explorer.litecoin.net/block/',
         ADDRESS_EXPLORER_URL_PREFIX='http://explorer.litecoin.net/address/',
         TX_EXPLORER_URL_PREFIX='http://explorer.litecoin.net/tx/',
+        SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
+        DUMB_SCRYPT_DIFF=2**16,
+        DUST_THRESHOLD=0.03e8,
+    ),
+
+    tenfivecoin=math.Object(
+        P2P_PREFIX='fabfb5da'.decode('hex'),
+        P2P_PORT=10511,
+        ADDRESS_VERSION=66,
+        RPC_PORT=10510,
+        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
+            'tenfivecoinaddress' in (yield bitcoind.rpc_help()) and
+            not (yield bitcoind.rpc_getinfo())['testnet']
+        )),
+        SUBSIDY_FUNC=lambda height: get_tenfivesubsidy(height),
+        POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('vtc_scrypt').getPoWHash(data)),
+        BLOCK_PERIOD=90, # s
+        SYMBOL='105',
+        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Tenfivecoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Tenfivecoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.tenfivecoin'), 'tenfivecoin.conf'),
+        BLOCK_EXPLORER_URL_PREFIX='http://explorer.vertcoin.org/block/',
+        ADDRESS_EXPLORER_URL_PREFIX='http://explorer.vertcoin.org/address/',
+        TX_EXPLORER_URL_PREFIX='http://explorer.vertcoin.org/tx/',
         SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
