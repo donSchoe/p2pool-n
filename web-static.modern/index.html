@@ -72,8 +72,8 @@
         <p>Special miner + config needed: "vertminer --scrypt-vert -Q 0 -o <span class='node'></span> -u
         Your<span class='currency'></span>PayoutAddress -p x"</p>
       </div>
-      <div class="alert alert-info">
-        <!--<p>message</p>-->
+      <div class="alert alert-info hidden">
+         <p>xxx</p>
       </div>
 
       <center>
@@ -150,9 +150,9 @@
         <thead><tr>
           <th class='text-left'><span class='currency'></span> Address</th>
           <th class='text-right'>Hashrate</th>
-          <th class='text-right'>DOA Hashrate (DOA %)</th>
-          <th class='text-right'>Share difficulty</th>
-          <th class='text-right'>Time to share</th>
+          <th class='text-right'>DOA Hashrate</th>
+          <th id='plus1' class='text-right'>Share difficulty</th>
+          <th id='plus2' class='text-right'>Time to share</th>
           <th class='text-right'>Predicted payout</th>
         </tr></thead>
         <tbody id='active_miners'>
@@ -237,6 +237,16 @@
 
     $(document).on('update_miners', function(e, eventInfo) {
       local_hashrate= 0; local_doa_hashrate= 0;
+
+      backend_plus = ((typeof local_stats.miner_last_difficulties !== 'undefined') ? true : false);
+
+      if (backend_plus) {
+        $('#plus1').removeClass('hidden');      
+        $('#plus2').removeClass('hidden');
+      } else {
+        $('#plus1').addClass('hidden');
+        $('#plus2').addClass('hidden');
+      }
       
       $('#active_miners').empty();
       
@@ -266,16 +276,21 @@
         tr.append($('<td/>').attr('class', 'text-right')
           .append(formatHashrate(doa) + ' (' + doa_prop.toFixed(2) + '%)'));
 
-        diff= parseFloat(local_stats.miner_last_difficulties[address]) || 0;
-        time_to_share= (parseInt(local_stats.attempts_to_share) / parseInt(hashrate)
-         * (diff / parseFloat(global_stats.min_difficulty))) || 0;
+        if (backend_plus) {
+          diff = parseFloat(local_stats.miner_last_difficulties[address]) || 0;
+          
+          time_to_share = (parseInt(local_stats.attempts_to_share) / parseInt(hashrate)
+           * (diff / parseFloat(global_stats.min_difficulty))) || 0;
+           
+          diff = diff.toFixed(3) + ' (' + formatInt(diff*65536) + ')';
+          time_to_share = (''+time_to_share).formatSeconds();
 
-        tr.append($('<td/>').attr('class', 'text-right')
-          .append(diff.toFixed(3) +
-        ' (' + formatInt(diff*65536) + ')'));
+          tr.append($('<td/>').attr('class', 'text-right')
+           .append(diff));
 
-        tr.append($('<td/>').attr('class', 'text-right')
-          .append((''+time_to_share).formatSeconds()));
+          tr.append($('<td/>').attr('class', 'text-right')
+           .append(time_to_share));
+        }
 
         payout= current_payouts[address];
 
@@ -311,9 +326,13 @@
 
       $('#network_rate').text(formatHashrate(global_stats.network_hashrate));
 
-      block_diff=global_stats.network_block_difficulty
-      $('#block_difficulty').text(block_diff.toFixed(3) +
-        ' (' + formatInt(block_diff*65536) + ')');
+      block_diff = global_stats.network_block_difficulty;
+      if (typeof block_diff !== 'undefined') {
+        block_diff = block_diff.toFixed(3) + ' (' + formatInt(block_diff*65536) + ')';
+      } else {
+        block_diff = 'n/a';
+      }
+      $('#block_difficulty').text(block_diff);
       
 
       share_diff=parseFloat(global_stats.min_difficulty);
