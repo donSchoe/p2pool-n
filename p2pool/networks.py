@@ -86,6 +86,25 @@ nets = dict(
         VERSION_CHECK=lambda v: True,
     ),
 
+    vertcoin2=math.Object(
+        PARENT=networks.nets['vertcoin'],
+        SHARE_PERIOD=15, # seconds
+        CHAIN_LENGTH=24*60*60//10, # shares
+        REAL_CHAIN_LENGTH=24*60*60//10, # shares
+        TARGET_LOOKBEHIND=200, # shares
+        SPREAD=12, # blocks
+        IDENTIFIER='a06a81c827cab974'.decode('hex'),
+        PREFIX='7c3614a6bcdcf795'.decode('hex'),
+        P2P_PORT=9346,
+        MIN_TARGET=4,
+        MAX_TARGET=2**256//2**20 - 1,
+        PERSIST=False,
+        WORKER_PORT=9171,
+        BOOTSTRAP_ADDRS='lovok.no-ip.com'.split(' '),
+        ANNOUNCE_CHANNEL='#p2pool-vtc',
+        VERSION_CHECK=lambda v: True,
+    ),
+
     gpucoin=math.Object(
         PARENT=networks.nets['gpucoin'],
         SHARE_PERIOD=10, # seconds
