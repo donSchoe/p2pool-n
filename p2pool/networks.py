@@ -157,7 +157,7 @@ nets = dict(
         MAX_TARGET=2**256//2**20 - 1,
         PERSIST=False,
         WORKER_PORT=7274,
-        BOOTSTRAP_ADDRS='freebtc.eu'.split(' '),
+        BOOTSTRAP_ADDRS='freebtc.eu lovok.no-ip.com'.split(' '),
         ANNOUNCE_CHANNEL='#p2pool-roto',
         VERSION_CHECK=lambda v: True,
     ),                                                                                                                                                                         
