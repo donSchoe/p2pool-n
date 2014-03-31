@@ -93,8 +93,8 @@ http://stackoverflow.com/q/6034390/1260906
 Running P2Pool:
 -------------------------
 Vertcoin: 
-* Run P2Pool with the "--net vertcoin" or "--net vertcoin2" (if you want to connect to 2nd network) option.
-* Run your miner program, connecting to 127.0.0.1 on port 9171.
+* Run P2Pool with the "--net vertcoin" or "--net vertcoin2" (if you want to connect to 2nd network; use --worker-port 9171 if you want default port for 2nd network workers) option.
+* Run your miner program, connecting to 127.0.0.1 on port 9171 or 9172 (for 2nd network).
 
 GPUCcoin: 
 * Run P2Pool with the "--net gpucoin" option.
