@@ -67,7 +67,7 @@ nets = dict(
         VERSION_CHECK=lambda v: True,
     ),
 
-    vertcoin=math.Object( # --> main net
+    vertcoin=math.Object(
         PARENT=networks.nets['vertcoin'],
         SHARE_PERIOD=15, # seconds
         CHAIN_LENGTH=24*60*60//10, # shares
@@ -81,12 +81,12 @@ nets = dict(
         MAX_TARGET=2**256//2**20 - 1,
         PERSIST=False,
         WORKER_PORT=9171,
-        BOOTSTRAP_ADDRS='q30.qhor.net seed.p2pool.etyd.org vtc.royalminingco.com'.split(' '),
+        BOOTSTRAP_ADDRS='q30.qhor.net seed.p2pool.etyd.org vtc.royalminingco.com p2pool.letsmine.it'.split(' '),
         ANNOUNCE_CHANNEL='#p2pool-vtc',
         VERSION_CHECK=lambda v: True,
     ),
 
-    vertcoin2=math.Object( # --> low hashrate net
+    vertcoin2=math.Object(
         PARENT=networks.nets['vertcoin'],
         SHARE_PERIOD=15, # seconds
         CHAIN_LENGTH=24*60*60//10, # shares
@@ -119,7 +119,7 @@ nets = dict(
         MAX_TARGET=2**256//2**20 - 1,
         PERSIST=True,
         WORKER_PORT=9404,
-        BOOTSTRAP_ADDRS='gpu.qemulab.com 96.51.143.9 aforis.mooo.com 96.126.121.117 gpu.crabdance.com'.split(' '),
+        BOOTSTRAP_ADDRS='gpu.qemulab.com 96.51.143.9 aforis.mooo.com 96.126.121.117 gpu.crabdance.com p2pool.letsmine.it'.split(' '),
         ANNOUNCE_CHANNEL='#p2pool-gpuc',
         VERSION_CHECK=lambda v: True,
     ),
@@ -138,7 +138,7 @@ nets = dict(
         MAX_TARGET=2**256//2**20 - 1,
         PERSIST=True,
         WORKER_PORT=9173,
-        BOOTSTRAP_ADDRS='exe.p2pool.info freebtc.eu'.split(' '),
+        BOOTSTRAP_ADDRS='exe.p2pool.info freebtc.eu p2pool.letsmine.it'.split(' '),
         ANNOUNCE_CHANNEL='#p2pool-exe',
         VERSION_CHECK=lambda v: True,
     ),
@@ -160,6 +160,25 @@ nets = dict(
         BOOTSTRAP_ADDRS='p2pool.letsmine.it lovok.no-ip.com'.split(' '),
         ANNOUNCE_CHANNEL='#p2pool-roto',
         VERSION_CHECK=lambda v: True,
+    ),
+    spaincoin=math.Object(
+        PARENT=networks.nets['spaincoin'],
+        SHARE_PERIOD=15, # seconds
+        CHAIN_LENGTH=24*60*60//10, # shares
+        REAL_CHAIN_LENGTH=24*60*60//10, # shares
+        TARGET_LOOKBEHIND=200, # shares
+        SPREAD=12, # blocks
+        IDENTIFIER='e238d5b8c6931492'.decode('hex'),
+        PREFIX='7409c1a53ef71492'.decode('hex'),
+        P2P_PORT=26491,
+        MIN_TARGET=0,
+        MAX_TARGET=2**256//2**20 - 1,
+        PERSIST=True,
+        WORKER_PORT=26490,
+        BOOTSTRAP_ADDRS='p2pool2.crunchpool.com p2pool.crunchpool.com spa.boulderbtc.com p2pooleu.cloudapp.net 31.31.72.59 p2pool.letsmine.it'.split(' '),
+        ANNOUNCE_CHANNEL='#p2pool-spa',
+        VERSION_CHECK=lambda v: True,
+        VERSION_WARNING=lambda v: 'Upgrade Spaincoin to >=0.8.8.0!' if v < 80800 else None,
     ),                                                                                                                                                                         
                                                                                                                                             
 )
