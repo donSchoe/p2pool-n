@@ -67,7 +67,7 @@ nets = dict(
         VERSION_CHECK=lambda v: True,
     ),
 
-    vertcoin=math.Object(
+    vertcoin=math.Object( # --> main net
         PARENT=networks.nets['vertcoin'],
         SHARE_PERIOD=15, # seconds
         CHAIN_LENGTH=24*60*60//10, # shares
@@ -86,7 +86,7 @@ nets = dict(
         VERSION_CHECK=lambda v: True,
     ),
 
-    vertcoin2=math.Object(
+    vertcoin2=math.Object( # --> low hashrate net
         PARENT=networks.nets['vertcoin'],
         SHARE_PERIOD=15, # seconds
         CHAIN_LENGTH=24*60*60//10, # shares
