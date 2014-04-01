@@ -206,6 +206,28 @@ nets = dict(
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
     ),                                                                                                                                                                      
+   
+   spaincoin=math.Object(
+        P2P_PREFIX='fb149200'.decode('hex'),
+        P2P_PORT=11492,
+        ADDRESS_VERSION=63,
+        RPC_PORT=11491,
+        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
+            'spaincoinaddress' in (yield bitcoind.rpc_help()) and
+            not (yield bitcoind.rpc_getinfo())['testnet']
+        )),
+        SUBSIDY_FUNC=lambda height: spa_sub(height), 
+        POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('vtc_scrypt').getPoWHash(data)),
+        BLOCK_PERIOD=120, # s
+        SYMBOL='SPA',
+        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Spaincoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Spaincoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.spaincoin'), 'spaincoin.conf'),
+        BLOCK_EXPLORER_URL_PREFIX='http://explorer.spaincoin.org/block/',
+        ADDRESS_EXPLORER_URL_PREFIX='http://explorer.spaincoin.org/address/',
+        TX_EXPLORER_URL_PREFIX='http://explorer.spaincoin.org/tx/',
+        SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
+        DUMB_SCRYPT_DIFF=2**16,
+        DUST_THRESHOLD=0.03e8,
+    ),
     
 )
 for net_name, net in nets.iteritems():
