@@ -181,7 +181,7 @@ nets = dict(
         VERSION_WARNING=lambda v: 'Upgrade Spaincoin to >=0.8.8.0!' if v < 80800 else None,
     ),                                                                                                                                                                         
      
-     spaincoin=math.Object(
+    spaincoin=math.Object(
         PARENT=networks.nets['spaincoin'],
         SHARE_PERIOD=15, # seconds
         CHAIN_LENGTH=24*60*60//10, # shares
