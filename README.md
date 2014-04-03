@@ -2,6 +2,8 @@ P2Pool Server Node software for Scrypt-N coins. Currently supported:
 * Vertcoin [VTC]
 * GPUCoin [GPUC]
 * Execoin [EXE]
+* Spaincoin [SPA]
+* Rotocoin [RT2]
 
 
 Requirements:
@@ -103,6 +105,14 @@ GPUCcoin:
 Execoin: 
 * Run P2Pool with the "--net execoin" option.
 * Run your miner program, connecting to 127.0.0.1 on port 9173.
+
+Rotocoin: 
+* Run P2Pool with the "--net rotocoin" option.
+* Run your miner program, connecting to 127.0.0.1 on port 7274.
+
+Spaincoin: 
+* Run P2Pool with the "--net spaincoin" option.
+* Run your miner program, connecting to 127.0.0.1 on port 26490.
 
 
 Sponsors:

@@ -21,6 +21,24 @@ def get_tenfivesubsidy(bnHeight):
 
     return int(nSubsidy * 1000000)
 
+# SpainCoin subsidy function
+SPASUBSIDY = [ 0, 940, 3492, 6069, 8673, 11304, 13963, 16650, 19366, 22112, 24887, 27694, 30532, 33402, 36305, 39241, 42213, 45219, 48262, 51342, 54459, 57616, 60812, 64050, 67329, 70652, 74018, 77430, 80889, 84396, 87952, 91559, 95218, 98930, 102698, 106523, 110407, 114351, 118358, 122429, 126566, 130773, 135051, 139402, 143830, 148336, 152924, 157597, 162358, 167210, 172157, 177203, 182351, 187607, 192974, 198457, 204062, 209794, 215659, 221663, 227813, 234116, 240581, 247215, 254027, 261028, 268229, 275641, 283276, 291149, 299275, 307671, 316355, 325347, 334672, 344353, 354420, 364904, 375841, 387273, 399246, 411814, 425039, 438994, 453765, 469451, 486176, 504084, 523359, 544224, 566966, 591957, 619690, 650844, 686380, 727739, 777208, 838764, 920291, 1041340, 1281967 ];
+def spa_sub(n):
+    i, a, b = 0, 1, 100
+    if n == 1:
+        return 25000000
+    if n >= SPASUBSIDY[100]: return 0
+    while b >= a:
+        i = (a+b)>>1
+        if n < SPASUBSIDY[i] and n >= SPASUBSIDY[i-1]:
+            break
+        if SPASUBSIDY[i] <= n:
+            a = i+1
+        else:
+            b = i-1
+
+    return 101-i
+
 def get_subsidy(nCap, nMaxSubsidy, bnTarget):
     bnLowerBound = 0.01
     bnUpperBound = bnSubsidyLimit = nMaxSubsidy
@@ -206,7 +224,27 @@ nets = dict(
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
     ),                                                                                                                                                                      
-    
+    spaincoin=math.Object(
+        P2P_PREFIX='fb149200'.decode('hex'),
+        P2P_PORT=11492,
+        ADDRESS_VERSION=63,
+        RPC_PORT=11491,
+        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
+            'spaincoinaddress' in (yield bitcoind.rpc_help()) and
+            not (yield bitcoind.rpc_getinfo())['testnet']
+        )),
+        SUBSIDY_FUNC=lambda height: spa_sub(height), 
+        POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('vtc_scrypt').getPoWHash(data)),
+        BLOCK_PERIOD=120, # s
+        SYMBOL='SPA',
+        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Spaincoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Spaincoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.spaincoin'), 'spaincoin.conf'),
+        BLOCK_EXPLORER_URL_PREFIX='http://explorer.spaincoin.org/block/',
+        ADDRESS_EXPLORER_URL_PREFIX='http://explorer.spaincoin.org/address/',
+        TX_EXPLORER_URL_PREFIX='http://explorer.spaincoin.org/tx/',
+        SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
+        DUMB_SCRYPT_DIFF=2**16,
+        DUST_THRESHOLD=0.03e8,
+    ),    
 )
 for net_name, net in nets.iteritems():
     net.NAME = net_name
