@@ -223,8 +223,8 @@ nets = dict(
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
     ),                                                                                                                                                                      
-   
-   spaincoin=math.Object(
+
+    spaincoin=math.Object(
         P2P_PREFIX='fb149200'.decode('hex'),
         P2P_PORT=11492,
         ADDRESS_VERSION=63,
