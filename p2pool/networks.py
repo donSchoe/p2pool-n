@@ -100,7 +100,7 @@ nets = dict(
         MAX_TARGET=2**256//2**20 - 1,
         PERSIST=False,
         WORKER_PORT=9172,
-        BOOTSTRAP_ADDRS='lovok.no-ip.com:9346 lovok.no-ip.com:9347 us-east.p2pools.net:9346 us-east.p2pools.net:9347 vert.marcsi.ch:9346 vert.marcsi.ch:9347'.split(' '),
+        BOOTSTRAP_ADDRS='lovok.no-ip.com:9346 lovok.no-ip.com us-east.p2pools.net us-central.p2pools.net us-west.p2pools.net vert.marcsi.ch'.split(' '),
         ANNOUNCE_CHANNEL='#p2pool-vtc',
         VERSION_CHECK=lambda v: True,
     ),
