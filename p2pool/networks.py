@@ -201,6 +201,25 @@ nets = dict(
         VERSION_WARNING=lambda v: 'Upgrade Spaincoin to >=0.8.8.0!' if v < 80800 else None,
     ),                                                                                                                                                                         
 
+    caishen=math.Object(
+        PARENT=networks.nets['caishen'],
+        SHARE_PERIOD=15, # seconds
+        CHAIN_LENGTH=24*60*60//10, # shares
+        REAL_CHAIN_LENGTH=24*60*60//10, # shares
+        TARGET_LOOKBEHIND=200, # shares
+        SPREAD=12, # blocks
+        IDENTIFIER='a06a81c827cab9e3'.decode('hex'),
+        PREFIX='7c3614a6bcdcf7e4'.decode('hex'),
+        P2P_PORT=2828,
+        MIN_TARGET=4,
+        MAX_TARGET=2**256//2**20 - 1,
+        PERSIST=False,
+        WORKER_PORT=2888,
+        BOOTSTRAP_ADDRS='thepool.pw lovok.no-ip.com'.split(' '),
+        ANNOUNCE_CHANNEL='#p2pool-cai',
+        VERSION_CHECK=lambda v: True,
+    ),
+
 )
 for net_name, net in nets.iteritems():
     net.NAME = net_name
