@@ -54,7 +54,7 @@ def get_caishensubsidy(bnHeight):
     elif bnHeight > 358363:
         nSubsidy = 10
 
-    return int(nSubsidy * 1000000)
+    return int(nSubsidy * 100000000)
 
 def get_subsidy(nCap, nMaxSubsidy, bnTarget):
     bnLowerBound = 0.01
