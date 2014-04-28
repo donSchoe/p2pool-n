@@ -263,26 +263,7 @@ nets = dict(
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
     ),
-    
-<<<<<<< HEAD
-    caishen=math.Object(
-        P2P_PREFIX='fabfb5da'.decode('hex'),
-        P2P_PORT=14260,
-        ADDRESS_VERSION=28,
-        RPC_PORT=14261,
-        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
-            'caishenaddress' in (yield bitcoind.rpc_help()) and
-            not (yield bitcoind.rpc_getinfo())['testnet']
-        )),
-        SUBSIDY_FUNC=lambda height: get_caishensubsidy(height),
-        POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('vtc_scrypt').getPoWHash(data)),
-        BLOCK_PERIOD=88, # s
-        SYMBOL='CAI',
-        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Caishen') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Caishen/') if platform.system() == 'Darwin' else os.path.expanduser('~/.caishen'), 'caishen.conf'),
-        BLOCK_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/block/',
-        ADDRESS_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/address/',
-        TX_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/tx/',
-=======
+
     kimocoin=math.Object(
         P2P_PREFIX='6b696d6f'.decode('hex'),
         P2P_PORT=1889,
@@ -300,7 +281,28 @@ nets = dict(
         BLOCK_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/block/',
         ADDRESS_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/address/',
         TX_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/tx/',
->>>>>>> e57e3b4e2b56d308241f488ec1afb8d3345998c3
+        SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
+        DUMB_SCRYPT_DIFF=2**16,
+        DUST_THRESHOLD=0.03e8,
+    ),
+
+    caishen=math.Object(
+        P2P_PREFIX='fabfb5da'.decode('hex'),
+        P2P_PORT=14260,
+        ADDRESS_VERSION=28,
+        RPC_PORT=14261,
+        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
+            'caishenaddress' in (yield bitcoind.rpc_help()) and
+            not (yield bitcoind.rpc_getinfo())['testnet']
+        )),
+        SUBSIDY_FUNC=lambda height: get_caishensubsidy(height),
+        POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('vtc_scrypt').getPoWHash(data)),
+        BLOCK_PERIOD=88, # s
+        SYMBOL='CAI',
+        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Caishen') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Caishen/') if platform.system() == 'Darwin' else os.path.expanduser('~/.caishen'), 'caishen.conf'),
+        BLOCK_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/block/',
+        ADDRESS_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/address/',
+        TX_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/tx/',
         SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
