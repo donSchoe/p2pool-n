@@ -246,6 +246,28 @@ nets = dict(
         DUST_THRESHOLD=0.03e8,
     ),
     
+    kimocoin=math.Object(
+        P2P_PREFIX='6b696d6f'.decode('hex'),
+        P2P_PORT=1889,
+        ADDRESS_VERSION=46,
+        RPC_PORT=1988,
+        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
+            'kimocoinaddress' in (yield bitcoind.rpc_help()) and
+            not (yield bitcoind.rpc_getinfo())['testnet']
+        )),
+        SUBSIDY_FUNC=lambda h: int(h+1 if h < 100e3 else 100e3-((h-99999)//10e3)*10e3 if h < 150e3 else 50e3-((h+1)-150e3) if h < 195e3 else 5e3)*100000000,
+        POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('vtc_scrypt').getPoWHash(data)),
+        BLOCK_PERIOD=60, # s
+        SYMBOL='KMC',
+        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'kimocoin') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/kimocoin/') if platform.system() == 'Darwin' else os.path.expanduser('~/.kimocoin'), 'kimocoin.conf'),
+        BLOCK_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/block/',
+        ADDRESS_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/address/',
+        TX_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/tx/',
+        SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
+        DUMB_SCRYPT_DIFF=2**16,
+        DUST_THRESHOLD=0.03e8,
+    ),
+    
 )
 for net_name, net in nets.iteritems():
     net.NAME = net_name
