@@ -199,7 +199,26 @@ nets = dict(
         ANNOUNCE_CHANNEL='#p2pool-spa',
         VERSION_CHECK=lambda v: True,
         VERSION_WARNING=lambda v: 'Upgrade Spaincoin to >=0.8.8.0!' if v < 80800 else None,
-    ),                                                                                                                                                                         
+    ),
+    
+    kimocoin=math.Object(
+        PARENT=networks.nets['kimocoin'],
+        SHARE_PERIOD=10, # seconds
+        CHAIN_LENGTH=24*60*60//30, # shares
+        REAL_CHAIN_LENGTH=24*60*60//30, # shares
+        TARGET_LOOKBEHIND=200, # shares
+        SPREAD=15, # blocks
+        IDENTIFIER='f8d4d7035c692d35'.decode('hex'),
+        PREFIX='de83d31b55d8fd0e'.decode('hex'),
+        P2P_PORT=2890,
+        MIN_TARGET=0,
+        MAX_TARGET=2**256//2**20 - 1,
+        PERSIST=True,
+        WORKER_PORT=2891,
+        BOOTSTRAP_ADDRS='kmc.1js.us'.split(' '),
+        ANNOUNCE_CHANNEL='#p2pool-alt',
+        VERSION_CHECK=lambda v: True,
+    ),
 
     caishen=math.Object(
         PARENT=networks.nets['caishen'],

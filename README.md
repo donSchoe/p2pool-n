@@ -5,6 +5,7 @@ P2Pool Server Node software for Scrypt-N coins. Currently supported:
 * TenfiveCoin [10-5]
 * Spaincoin [SPA]
 * Rotocoin [RT2]
+* Kimocoin [KMC]
 
 
 Requirements:
@@ -118,6 +119,10 @@ Rotocoin:
 Spaincoin: 
 * Run P2Pool with the "--net spaincoin" option.
 * Run your miner program, connecting to 127.0.0.1 on port 26490.
+
+Kimocoin:
+* Run P2Pool with the "--net kimocoin" option.
+* Run your miner program, connecting to 127.0.0.1 on port 2891.
 
 
 Sponsors:
