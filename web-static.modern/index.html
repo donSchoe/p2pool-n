@@ -128,8 +128,8 @@
           <td width='25%' class='text-right'><span id='expected_time_to_block'></span></td>
         </tr>
         <tr>
-          <td width='25%'>Node fee:</td>
-          <td width='25%' class='text-right'><span id='node_fee'></span></td>
+          <td width='25%'>Node fee / donation:</td>
+          <td width='25%' class='text-right'><span id='node_fee'></span> / <span id='node_donation'></span></td>
           <td width='25%'>Node uptime:</td>
           <td width='25%' class='text-right'><span id='node_uptime'></span></td>
         </tr>
@@ -139,10 +139,6 @@
           <td width='25%'>Protocol version:</td>
           <td width='25%' class='text-right'><span id='protocol_version'></span></td>
         </tr>
-        <!--<tr>
-          <td width='25%'>Node donation:</td>
-          <td width='25%' class='text-right'><span id='node_donation'></span></td>
-        </tr>-->
       </table>
 
       <h4>Active miners on this node</h4>
@@ -343,8 +339,8 @@
         .text(parseFloat(local_stats.block_value).toFixed(8))
         .append(' ').append(currency.clone());
 
-      //$('#node_donation')
-      //  .text(local_stats.donation_proportion + '%');
+      $('#node_donation')
+        .text((local_stats.donation_proportion * 100) + '%');
       
       $('#node_fee')
         .text(local_stats.fee + '%');

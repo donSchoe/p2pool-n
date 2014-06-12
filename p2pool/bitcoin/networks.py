@@ -38,6 +38,24 @@ def spa_sub(n):
 
     return 101-i
 
+def get_caishensubsidy(bnHeight):
+    nSubsidy = 28
+
+    if bnHeight == 0:
+        nSubsidy = 1
+    elif bnHeight < 2:
+        nSubsidy = 560000
+    elif bnHeight > 3583630:
+        nSubsidy = 1
+    elif bnHeight > 2150178:
+        nSubsidy = 3
+    elif bnHeight > 1075089:
+        nSubsidy = 5
+    elif bnHeight > 358363:
+        nSubsidy = 10
+
+    return int(nSubsidy * 100000000)
+
 def get_subsidy(nCap, nMaxSubsidy, bnTarget):
     bnLowerBound = 0.01
     bnUpperBound = bnSubsidyLimit = nMaxSubsidy
@@ -245,7 +263,7 @@ nets = dict(
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
     ),
-    
+
     kimocoin=math.Object(
         P2P_PREFIX='6b696d6f'.decode('hex'),
         P2P_PORT=1889,
@@ -263,6 +281,28 @@ nets = dict(
         BLOCK_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/block/',
         ADDRESS_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/address/',
         TX_EXPLORER_URL_PREFIX='http://explorer.kimocoin.com/tx/',
+        SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
+        DUMB_SCRYPT_DIFF=2**16,
+        DUST_THRESHOLD=0.03e8,
+    ),
+
+    caishen=math.Object(
+        P2P_PREFIX='fabfb5da'.decode('hex'),
+        P2P_PORT=14260,
+        ADDRESS_VERSION=28,
+        RPC_PORT=14261,
+        RPC_CHECK=defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
+            'caishenaddress' in (yield bitcoind.rpc_help()) and
+            not (yield bitcoind.rpc_getinfo())['testnet']
+        )),
+        SUBSIDY_FUNC=lambda height: get_caishensubsidy(height),
+        POW_FUNC=lambda data: pack.IntType(256).unpack(__import__('vtc_scrypt').getPoWHash(data)),
+        BLOCK_PERIOD=88, # s
+        SYMBOL='CAI',
+        CONF_FILE_FUNC=lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'Caishen') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/Caishen/') if platform.system() == 'Darwin' else os.path.expanduser('~/.caishen'), 'caishen.conf'),
+        BLOCK_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/block/',
+        ADDRESS_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/address/',
+        TX_EXPLORER_URL_PREFIX='http://greekpool.eu:29000/tx/',
         SANE_TARGET_RANGE=(2**256//1000000000 - 1, 2**256//1000 - 1),
         DUMB_SCRYPT_DIFF=2**16,
         DUST_THRESHOLD=0.03e8,
